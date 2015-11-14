@@ -9,14 +9,17 @@ public class GameOfLife_ {
     @Before
     public void setUp(){
         world = new World();
+        world.addCell(new CellLocation(0,0));
     }
 
     @Test
     public void when_you_got_only_one_cell_in_the_world() throws Exception {
-        world.addCell(new CellLocation(0,0));
         assertThat(world.getPopulationSize(),is(1));
-
     }
 
-
+    @Test
+    public void when_only_one_cell_and_it_dies_in_new_generation_cause_loneliness() throws Exception {
+        world.newGeneration();
+        assertThat(world.getPopulationSize(),is(0));
+    }
 }
