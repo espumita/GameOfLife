@@ -22,4 +22,14 @@ public class GameOfLife_ {
         world.newGeneration();
         assertThat(world.getPopulationSize(),is(0));
     }
+
+    @Test
+    public void when_one_cell_dies_cause_overpopulation_in_new_generation() throws Exception {
+        world.addCell(new CellLocation(0,1));
+        world.addCell(new CellLocation(-1,0));
+        world.addCell(new CellLocation(-1,1));
+        world.addCell(new CellLocation(-1,-1));
+        world.newGeneration();
+        assertThat(world.getPopulationSize(),is(3));
+    }
 }
