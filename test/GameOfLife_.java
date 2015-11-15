@@ -24,12 +24,14 @@ public class GameOfLife_ {
     }
 
     @Test
-    public void when_one_cell_dies_cause_overpopulation_in_new_generation() throws Exception {
+    public void when_the_cells_complete_a_successful_generation_with_all_ruls() throws Exception {
+        world.addCell("1_0");
+        world.addCell("1_1");
+        world.addCell("0_-1");
         world.addCell("0_1");
-        world.addCell("-1_0");
-        world.addCell("-1_1");
-        world.addCell("-1_-1");
         world.newGeneration();
-        assertThat(world.getPopulationSize(),is(3));
+        assertThat(world.getPopulationSize(),is(5));
     }
+
+
 }

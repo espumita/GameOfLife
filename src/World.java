@@ -21,7 +21,7 @@ public class World {
     }
 
     public void newGeneration() {
-        for(String location : population) checkPerimeter(location);
+        for(String location : population) checkPerimeter(true,location);
         displayNewGeneration();
     }
 
@@ -32,25 +32,31 @@ public class World {
         futureBorns.clear();
     }
 
-    private void checkPerimeter(String location) {
+    private void checkPerimeter(boolean exists, String location) {
         String[] parts = location.split("_");
         int i = Integer.parseInt(parts[0]);
         int j = Integer.parseInt(parts[1]);
-        if (futureDeads.contains(location)) return;
         int count = 0;
-        if(population.contains((i+1)+"_"+(j+1))) count++;
-        if(population.contains((i+1)+"_"+(j))) count++;
-        if(population.contains((i+1)+"_"+(j-1))) count++;
-        if(population.contains((i)+"_"+(j+1))) count++;
-        if(population.contains((i)+"_"+(j-1))) count++;
-        if(population.contains((i-1)+"_"+(j+1))) count++;
-        if(population.contains((i-1)+"_"+(j))) count++;
-        if(population.contains((i-1)+"_"+(j-1))) count++;
-        checkPerimeterRules(location,count);
+        if(population.contains((i+1)+"_"+(j+1))) count++; else if(exists) checkPerimeter(false,(i+1)+"_"+(j+1));
+        if(population.contains((i+1)+"_"+(j))) count++; else if(exists) checkPerimeter(false,(i+1)+"_"+(j));
+        if(population.contains((i+1)+"_"+(j-1))) count++; else if(exists) checkPerimeter(false,(i+1)+"_"+(j-1));
+        if(population.contains((i)+"_"+(j+1))) count++; else if(exists) checkPerimeter(false,(i)+"_"+(j+1));
+        if(population.contains((i)+"_"+(j-1))) count++; else if(exists) checkPerimeter(false,(i)+"_"+(j-1));
+        if(population.contains((i-1)+"_"+(j+1))) count++; else if(exists) checkPerimeter(false,(i-1)+"_"+(j+1));
+        if(population.contains((i-1)+"_"+(j))) count++; else if(exists) checkPerimeter(false,(i-1)+"_"+(j));
+        if(population.contains((i-1)+"_"+(j-1))) count++; else if(exists) checkPerimeter(false,(i-1)+"_"+(j-1));
+        checkPerimeterRules(exists,location,count);
     }
 
-    private void checkPerimeterRules(String location, int count) {
-        if(count  < 2 || count  > 3) futureDeads.add(location);
+    private void checkPerimeterRules(boolean exists, String location, int count) {
+        if(exists && count  < 2 || count  > 3) futureDeads.add(location);
+        if(!exists && count == 3) futureBorns.add(location);
 
+    }
+
+    public void print() {
+        System.out.println("----------------------------------------");
+        for(String location : population) System.out.println(location);;
+        System.out.println("----------------------------------------");
     }
 }
