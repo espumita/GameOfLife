@@ -9,7 +9,7 @@ public class GameOfLife_ {
     @Before
     public void setUp(){
         world = new World();
-        world.addCell(new CellLocation(0,0));
+        world.addCell("0_0");
     }
 
     @Test
@@ -25,10 +25,10 @@ public class GameOfLife_ {
 
     @Test
     public void when_one_cell_dies_cause_overpopulation_in_new_generation() throws Exception {
-        world.addCell(new CellLocation(0,1));
-        world.addCell(new CellLocation(-1,0));
-        world.addCell(new CellLocation(-1,1));
-        world.addCell(new CellLocation(-1,-1));
+        world.addCell("0_1");
+        world.addCell("-1_0");
+        world.addCell("-1_1");
+        world.addCell("-1_-1");
         world.newGeneration();
         assertThat(world.getPopulationSize(),is(3));
     }
